@@ -1,0 +1,26 @@
+/* Stylesheet for Vinq 
+   Author : Sujay Kundu 
+
+*/
+
+
+.top-nav{
+       text-decoration: none;
+       color : #2044A2;
+       margin-top:3px;
+       padding-left: 10px;
+       font-family: verdana;
+       font-size: 16px;
+       text-align: center;
+      }
+       
+.logo{
+margin-right:25%;
+margin-left:35%;
+padding-left:20px;
+text-align:center;
+}
+
+.lr{
+	float: right;
+}
