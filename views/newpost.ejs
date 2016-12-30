@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <script src="/ckeditor/ckeditor.js"></script>
     
 </head>
 <body>
@@ -73,13 +74,21 @@
                           <label>Title </label>
                           <input type="text" id="title" class="form-control" name="title">
                       </div>
+                  
                        <div class="form-group">
                         <label>Post Image</label>
                         <input type="file" name="post_img"> 
                       </div>
                       <div class="form-group">
                         <label>Content </label>
-                        <textarea id="content" class="form-control" name="content"></textarea>
+                         
+                   <textarea id="content" name="content"></textarea> 
+                    <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'content' );
+            </script>
+
                       </div>
                       <!--
                       <div class="form-group">

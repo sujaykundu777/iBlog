@@ -23,4 +23,11 @@ text-align:center;
 
 .lr{
 	float: right;
+  margin-right: 20px;
+}
+.post_img{
+ 
+ height: 300px;
+ width: auto;
+
 }

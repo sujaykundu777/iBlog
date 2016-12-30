@@ -33,7 +33,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right"><br>
-        <li><b>Welcome ,<a href="/profile"> <%= user.name %> </a></b></li> 
+        <li><b>Welcome ,<a href="/profile/<%=user.username%>"> <%= user.name %> </a></b></li> 
         
          
       </ul>
@@ -53,7 +53,7 @@
                 <p> <%= title %>
                
 
-               <a class="lr btn btn-primary" href="/posts/new"> Add New Post </a></p>
+               <a class="lr btn btn-primary" href="/posts/new"> Add New Post </a><a class="lr btn btn-primary" href="categories/new">Add New Category </a></p>
                             </div>
 
 
@@ -61,24 +61,30 @@
         </div>
         <div class="col-lg-12">
 
+<div class="container">
+ <div class="col-lg-12">
   
   <% posts.forEach((post) => { %>
-    <a href="/post/<%= post.id %>" class="list-group-item">
+    
     <div class="panel panel-default">
     <div class="panel-heading">
       <%= post.title %>    
         </div>
       <div class="panel-body">
-      <%= post.content %>
+      <%- post.content %> <br>
+      
+      <img class="post_img" src="/images/<%= post.post_img %>">
      </div>
      <div class="panel-footer">
-      Posted On : <%= post.postedOn %>
+      Posted On : <%= post.postedOn %> 
+
+      <a class="lr btn btn-info btn-sm" href="/posts/show/<%= post.id %>">Read More</a>
 </div>
 </div>
-    </a>
+    
   <% }) %>
 </div>
-                 
+      </div></div>           
                     
         </div>
         <br>

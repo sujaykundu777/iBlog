@@ -54,7 +54,7 @@
               
                     
                        <!-- Form for new post -->
-                    <form method="post" action="/dashboard/newpost"  enctype="multipart/form-data">
+                    <form method="post" action="/posts/show/<%= post.id %>/edit"  enctype="multipart/form-data">
                       <div class="form-group">
                           <label>Title </label>
                           <input type="text" id="title" class="form-control" name="title">

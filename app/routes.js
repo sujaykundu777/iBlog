@@ -11,14 +11,14 @@ var Post = require('../app/models/post');
 
 var LocalStrategy = require('passport-local').Strategy;
 var upload  = multer({
-                     dest: './uploads'
+                     dest: './public/images'
                      });
 
 
      //used to serialize the user for the session
      passport.serializeUser(function(user, done){
        console.log('serializing user: ', user);
-       done(null, user.id);
+       done(null, user.id);/categories/new
      });
       
      //used to deserialize the user
@@ -148,12 +148,17 @@ var upload  = multer({
 //Add new post 
     
    router.get('/posts/new', ensureAuthenticated , function(req,res){
-             var user = req.user;
-              res.render('newpost.ejs', {
-                                        title: 'Add New Post',
-                                        user:user
 
-              });
+      
+
+            var user = req.user;
+              res.render('newpost.ejs', {
+                                        'title': 'Add New Post',
+                                        user:user
+       
+
+    });
+           
    });
 
 // Add New Post
@@ -202,7 +207,7 @@ var upload  = multer({
 
       //Route for Showing Posts 
  
-      router.get('/posts', function(req, res, next ){
+      router.get('/posts', ensureAuthenticated , function(req, res, next ){
          
            Post.find(function(err , Post) {
            if (err) { 
@@ -223,69 +228,77 @@ var upload  = multer({
               });
 
 
-    //Route for showing Single posts
+    //Route for showing Single post
 
       
-router.get('/post/:id', function(req, res){
-   res.render('post', {
-    title: 'Showing post'
+router.get('/posts/show/:id',ensureAuthenticated, function(req, res,next){
+ 
+  Post.findById(req.params.id,function(err , Post){
+     if(err){
+      return next(err);
+
+     }
+     var user = req.user;
+ res.render('post', {
+    title: 'Showing post',
+    post : Post,
+    user: user
   });
 
+ });
+  
 });
 
 //Route to show edit a single post page 
 
- router.get('/post/:id/edit',ensureAuthenticated,function(req,res){
+ router.get('/posts/show/:id/edit',ensureAuthenticated,function(req,res){
    var user = req.user;
-   res.render('post_edit', {title : 'Edit Post', 
-                               user : user
- });
-    
-
- });
-
-
-
-       //Route to Update A Single Post 
- router.put('/post/:id/edit', function(req,res){
-    
-
-  var title = req.body.title;
-  var content = req.body.content;
-
-
- 
-       if(req.file){
-       
-       console.log('Uploading Post Image');
-       var post_img = req.file.filename;
+    Post.findById(req.params.id,function(err , Post){
+     if(err){
+      return next(err);
 
      }
+   res.render('editpost', {title : 'Edit Post', 
+                               user : user,
+                               post: Post
+ });
+    
+});
+ });
 
+router.put('/posts/show/:id/edit', ensureAuthenticated, function(req, res ){
+ 
+   var editedPost = {
+       title: req.body.title,
+      content: req.body.content
+ };
 
-     else{
-        
-        console.log('Uploading Failed ! ');  
-         var post_img = 'noimage.jpg';
+ Post.findById(req.params.id, editedPost , function(err , Post){
+     
+     if(err) {
+      return next(err);
+      return res.redirect('/posts/show/' + req.params.id);
        }
+        
+     if(Post){
+          
+          Post.save(function(err){
+                 if(err) {
+                  return next(err);
+                 }
+              
+              res.redirect('/posts/show/' + req.params.id);
+          });
+         
+     }
+     else{
 
-     var editedPost = {
-                        'title':  title,
-                        'content' : content,
-                        'post_img' : post_img,
-                        'postedOn':  new Date()
-};
- Post.findByIdAndUpdate(req.params.id,editedPost, function(err, post){
-      if(err) {
-           req.flash('error', err.message);
+           res.send('Post Does Not Exist !');
+          }
+ });
 
-      }
-  
-   req.flash('success' , 'Post updated successfully');
-res.redirect('/post/' + post.id);
 });
 
-});
 
 
   //Route to delete a post 
@@ -323,6 +336,7 @@ return res.redirect('/posts');
   //Handle Logout 
   router.get('/logout', function(req,res){
          req.logout();
+         req.flash('success', 'Successfully Logged Out ');
       res.redirect('/login');
     });
 

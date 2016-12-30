@@ -19,7 +19,7 @@ var express = require('express'),
 	upload  = multer({dest: './uploads'}), 
 	Session = require('express-session');
     
-   
+  
     //Connect to Database
     mongoose.connect(configDB.url);
     app.use(morgan('dev')); // log every request to the console
@@ -29,6 +29,11 @@ var express = require('express'),
     app.use(bodyParser.json())    // parse application/json
     app.use(methodOverride('_method'));
     app.use(flash()); // Connect flash for flash messages stored in session
+    app.use(function(req, res , next) {
+    	res.locals.messages = require('express-messages')(req, res);
+    	next();
+
+    });
     app.use(Session({secret: 'secret',
             resave: true,
             saveUninitialized: true})); //Todo - Why do we need this key
