@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+
+<head>
+    <%- include('../partials/head.ejs'); %>
+</head>
+
+<body>
+    <header>
+        <%- include('../partials/navbar2.ejs'); %>
+    </header>
+    <div class="container">
+        <div class="col-lg-12">
+        <div class="row justify-content-center">
+            <div class="jumbotron">
+                    <h1> User Dashboard </h1>
+                    <li><b>Welcome ,<a href="/profile/<%=user.username%>"> <%= user.name %> </a></b></li>
+
+                    <p>
+                        <b>Name : </b> <%= user.name %>  <br/ >
+                        <b>Email : </b>  <%= user.email %>
+                    </p>
+
+            </div>
+        </div>
+
+        </div>
+
+    </div>
+
+    <footer style="text-align: center;">
+        <%- include('../partials/footer.ejs'); %>
+    </footer>
+</body>
+
+</html>
