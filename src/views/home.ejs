@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+    <head>
+          <%- include('./partials/head.ejs'); %>
+    </head>
+    <body>
+        <header>
+             <%- include('./partials/navbar1.ejs'); %>
+        </header>
+        <div class="container-fluid">
+            <div class="row">
+                    <div class="jumbotron text-center">
+                            <img src="/images/iBlog.png" width="120px" height="120px" />
+                            <p> A blogging system built using NodeJS,Express,EJS and Mongodb </p>
+                            <a href="/register"><button class="btn btn-lg btn-success"> Get Started</button></a>
+                    </div>
+            </div>
+        </div>
+
+        <footer style="text-align: center;">
+            <%- include('./partials/footer.ejs'); %>
+        </footer>
+    </body>
+</html>
