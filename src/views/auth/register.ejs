@@ -15,6 +15,10 @@
 
                     <h1> Register</h1>
 
+                    <% if (message.length > 0) { %>
+                        <div class="alert alert-success"><%= message %></div>
+                    <% } %>
+
                     <!-- SIGNUP FORM -->
                     <form action="/api/register" method="POST">
                        <div class="form-group">

@@ -14,12 +14,12 @@ function Router(app) {
 
     // Login View
     app.get('/login', (req, res) => {
-        res.render('auth/login.ejs');
+        res.render('auth/login.ejs', {message: req.flash('info')} );
     });
 
     // Signup View
     app.get('/register', (req, res) => {
-        res.render('auth/register.ejs');
+        res.render('auth/register.ejs',  { message: req.flash('info') });
     });
 
     // use google for authentication

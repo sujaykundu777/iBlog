@@ -50,8 +50,8 @@ router.get('/google/callback', async (req, res) => {
 
                 //redirect if user not found
                 if(!userObj){
-                    console.log('Registration required !');
-                    res.redirect('/register');
+                    req.flash('info', 'Registration Required !')
+                    res.redirect('/login');
                 }
                 // Save the details in the session
                 req.session.authed = true;
@@ -113,8 +113,8 @@ router.get('/facebook/callback', async (req, res) => {
 
                 // redirect if user not found
                 if(!userObj){
-                    console.log('Registration required !');
-                    res.redirect('/register');
+                   req.flash('info','Registration required !');
+                   res.redirect('/login');
                 }
 
                 // Save the details in the session
@@ -122,7 +122,6 @@ router.get('/facebook/callback', async (req, res) => {
                 req.session.user = userObj;
 
                 res.redirect('/dashboard');
-
             }
         } else {
             // if no code
