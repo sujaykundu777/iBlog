@@ -44,3 +44,10 @@ should start the app at `http://localhost:3000`
 `npm run start`
 
 should start the app at `http://localhost:3000`
+
+## APIDOCs - Swagger generated docs using OpenApi Specification
+
+You can visit `http://localhost:3000/apidoc` for apidoc using swagger locally
+
+or visit [Swagger Editor](http://editor.swagger.io/#/) and upload `swagger.json` file to view the docs
+
