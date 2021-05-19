@@ -13,6 +13,11 @@
             <div class="col-lg-6 offset-md-2">
 
                 <h1> Login</h1>
+
+                <% if (message.length > 0) { %>
+                    <div class="alert alert-success"><%= message %></div>
+                <% } %>
+
                 <!-- LOGIN FORM -->
                 <form action="/api/login" method="post">
                     <div class="form-group">

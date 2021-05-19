@@ -1,0 +1,176 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "iBlog Api Docs",
+        "version": "1.0.0",
+        "title": "iBlog Apis",
+        "contact": {
+            "email": "sujaykundu777@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "schemes": ["http", "https"],
+    "host": "localhost:3000",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Authentication APIs"
+        }
+    ],
+    "paths" : {
+        "/api/login" : {
+            "post" : {
+                "summary" : "Login API",
+                "description": "User Authentication",
+                "produces": "application/json",
+                "consumes": "application/json",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "user credentials",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/LoginObj"
+                         }
+                    }
+                ],
+                "tags": ["Auth"],
+                "responses": {
+                    "200": {
+                        "description": "Logged-in successfully",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register" : {
+            "post" : {
+                "summary" : "Register API",
+                "description": "User Registration",
+                "produces": "application/json",
+                "consumes": "application/json",
+                "tags": ["Auth"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "register user object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/RegisterObj"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registration Success",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
+        },
+      "/logout":  {
+        "get" : {
+            "summary" : "Logout",
+            "description": "Logout current user",
+            "produces": ["application/json"],
+            "tags": ["Auth"],
+            "parameters": [],
+            "responses": {
+                "200": {
+                    "description": "Logged out successfully",
+                    "schema": {
+                        "type": "object",
+                        "$ref": "#/definitions/SuccessResponse"
+                    }
+                },
+                "400": {
+                    "description": "Invalid status value",
+                    "schema": {
+                        "$ref": "#/definitions/InvalidResponse"
+                    }
+                }
+            }
+        }
+      }
+    },
+    "definitions": {
+        "LoginObj": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                     "type": "string"
+                }
+            }
+        },
+        "RegisterObj": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "SuccessResponse": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "InvalidResponse": {
+            "type": "object",
+            "properties": {
+                "success": {
+                    "type": "string"
+                },
+                "error": {
+                    "type": "string"
+                }
+            }
+
+        }
+    }
+
+}

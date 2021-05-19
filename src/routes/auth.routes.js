@@ -12,6 +12,13 @@ router.post('/register', async (req, res, next) => {
     // hash password before saving to db
     let hashedPassword = await hashPassword(password);
 
+    // check if email already exists
+    let isExistingUser = await User.findOne({"email": email});
+    if(isExistingUser){
+        req.flash('info', 'Failed to register ! Existing user');
+        res.redirect('/register');
+    }
+
     // create new user object
     const newUser = new User({
         username: username,
@@ -23,17 +30,12 @@ router.post('/register', async (req, res, next) => {
     let response;
     // create new user
      await newUser.save().then(data => {
-            //  res.status(200).send({
-            //      success: true,
-            //      message: 'registration successful',
-            //      data: data
-            //  });
-            res.redirect('/login');
+            req.flash('info', 'Registration Successful, Please Login !');
+            res.redirect('/register');
          }).catch(err => {
-                res.status(400).send({
-                    success: false,
-                    message: err.message
-                });
+            req.flash('info', err.message);
+            throw err;
+           // res.redirect('/register');
       });
 });
 
@@ -47,24 +49,14 @@ router.post('/login', async (req, res) => {
     await User.findOne({username: username}).then(user => {
             userdetails = user;
     }).catch(err => {
-            console.log('User not found');
-            return res.status(400).send({
-                "success": "false",
-                "message": "Authentication Failed !",
-                "error": "No user found with the username, Please try again"
-            });
+            req.flash('info', 'Failed to login, User not found !')
+            res.redirect('/login');
     });
 
     // check if existing user
     if(userdetails){
         let isExistingUser = await verifyPassword(password, userdetails.password);
         if(isExistingUser){
-
-            // return res.status(200).send({
-            //             "success": true,
-            //             "message": "Authentication Successful",
-            //             "user": userdetails
-            // });
 
             // set auth to true
             req.session.authed = true;
@@ -75,22 +67,18 @@ router.post('/login', async (req, res) => {
                 'name': userdetails.name
             }
 
-            return res.redirect('/dashboard');
+            req.flash('info', 'Authentication Successful !')
+            res.redirect('/dashboard');
 
         }else{
              //     console.error('Passwords do not match')
                 req.session.authed = false;
-                return res.status(500).send({
-                    "success": "false",
-                    "message": "Authentication Failed !",
-                    "error": "Incorrect Password !"
-                })
+                req.flash('info', "Authentication Failed, Incorrect Password !")
+                res.redirect('/login');
         }
     }else{
-        console.log('User not found');
-        return res.status(400).send({
-            "error": "No user found, Please try again"
-        });
+        req.flash('info', "Authentication Failed, Incorrect Password !")
+        res.redirect('/login');
     }
 
 });
