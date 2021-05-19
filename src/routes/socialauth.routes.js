@@ -66,7 +66,7 @@ router.get('/google/callback', async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({
-            message: error.response.data || errror.message
+            message: error.response.data || error.message
         });
     }
 });
